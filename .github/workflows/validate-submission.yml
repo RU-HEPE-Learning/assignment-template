@@ -1,0 +1,18 @@
+name: Validate Assignment Structure
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files
+        shell: bash
+        run: |
+          test -f README.md
+          test -f assignment.md
+          test -f rubric/rubric.md
+          echo "Assignment template structure is valid."
