@@ -12,7 +12,18 @@ jobs:
       - name: Check required files
         shell: bash
         run: |
+          set -e
           test -f README.md
           test -f assignment.md
           test -f rubric/rubric.md
-          echo "Assignment template structure is valid."
+          echo "PASS: required assignment-template structure exists."
+      - name: Basic sensitive filename warning
+        shell: bash
+        run: |
+          if find . -type f | grep -Ei '(national.?id|passport|phone.?list|health.?record|student.?roster)' ; then
+            echo 'PASS WITH WARNING: review potentially sensitive filenames.'
+          else
+            echo 'PASS: no obvious sensitive filenames detected.'
+          fi
+      - name: Human authority notice
+        run: echo 'Structural validation only. This workflow does not assign grades or replace instructor judgment.'
