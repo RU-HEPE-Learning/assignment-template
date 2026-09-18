@@ -13,10 +13,19 @@ jobs:
         shell: bash
         run: |
           set -e
-          test -f README.md
-          test -f assignment.md
-          test -f rubric/rubric.md
-          echo "PASS: required assignment-template structure exists."
+          required=(
+            "README.md"
+            "assignment.md"
+            "STATUS.md"
+            "EVIDENCE-REQUIREMENTS.md"
+            "REFLECTION.md"
+            "FEEDBACK.md"
+            "rubric/rubric.md"
+          )
+          for f in "${required[@]}"; do
+            test -f "$f" || { echo "Missing required file: $f"; exit 1; }
+          done
+          echo "PASS: Learning Hub assignment structure exists."
       - name: Basic sensitive filename warning
         shell: bash
         run: |
